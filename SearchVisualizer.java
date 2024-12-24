@@ -1,4 +1,3 @@
-package Ca3Project;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +30,7 @@ public class SearchVisualizer extends JFrame {
 
         //Input for array panel for array
         JPanel arrayInputPanel = new JPanel(new FlowLayout());
-        arrayInputField = new JTextField(30);
+        arrayInputField = new JTextField(10);
         arraySearchInputField = new JTextField(15);
         linearSearchButton = new JButton("Linear Search");
         binarySearchButton = new JButton("Binary Search");
@@ -100,6 +99,7 @@ public class SearchVisualizer extends JFrame {
         linearSearchButton.setForeground(Color.WHITE);
         linearSearchButton.setFocusPainted(false);
         linearSearchButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+
         linearSearchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 restartSearch();
@@ -129,6 +129,7 @@ public class SearchVisualizer extends JFrame {
         binarySearchButton.setFocusPainted(false);
         binarySearchButton.setFont(new Font("Tahoma", Font.BOLD, 12));
         binarySearchButton.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 restartSearch();
                 String arrayInputStr = arrayInputField.getText();
@@ -288,47 +289,149 @@ public class SearchVisualizer extends JFrame {
             }
     }
 
-    private void restartSearch() {
-        array = null;
-        string = null;
+//    private void restartSearch() {
+//        array = null;
+//        string = null;
+//
+//        Graphics g = arrayPanel.getGraphics();
+//        g.clearRect(0, 0, arrayPanel.getWidth(), arrayPanel.getHeight());
+//    }
+//
+//    private void drawArray(Graphics g) {
+//        int startX = 10;
+//        int startY = 30;
+//        int boxWidth = 40;
+//        int boxHeight = 40;
+//        FontMetrics fm = g.getFontMetrics();
+//        g.setColor(textColor);
+//
+//        if (array != null) {
+//            for (int i = 0; i < array.length; i++) {
+//                g.drawRect(startX + i * boxWidth, startY, boxWidth, boxHeight);
+//                String num = Integer.toString(array[i]);
+//                int stringWidth = fm.stringWidth(num);
+//                g.drawString(num, startX + i * boxWidth + (boxWidth - stringWidth) / 2, startY + boxHeight / 2 + fm.getAscent() / 2);
+//            }
+//        }
+//    }
+//
+//    private void drawString(Graphics g) {
+//        int startX = 10;
+//        int startY = 100;
+//        int boxWidth = 40;
+//        int boxHeight = 40;
+//        FontMetrics fm = g.getFontMetrics();
+//        g.setColor(textColor);
+//
+//        if (string != null) {
+//            for (int i = 0; i < string.length(); i++) {
+//                g.drawRect(startX + i * boxWidth, startY, boxWidth, boxHeight);
+//                String character = String.valueOf(string.charAt(i));
+//                int stringWidth = fm.stringWidth(character);
+//                g.drawString(character, startX + i * boxWidth + (boxWidth - stringWidth) / 2, startY + boxHeight / 2 + fm.getAscent() / 2);
+//            }
+//        }
+//    }
+//
+//    private void highlightArrayElement(Graphics g, int index, Color color) {
+//        int startX = 10;
+//        int startY = 30;
+//        int boxWidth = 40;
+//        int boxHeight = 40;
+//        g.setColor(color);
+//        g.fillRect(startX + index * boxWidth, startY, boxWidth, boxHeight);
+//        g.setColor(textColor);
+//        g.drawRect(startX + index * boxWidth, startY, boxWidth, boxHeight);
+//    }
+//
+//    private void highlightString(Graphics g, int start, int end, Color color) {
+//        int startX = 10;
+//        int startY = 100;
+//        int boxWidth = 40;
+//        int boxHeight = 40;
+//
+//        Graphics2D g2d = (Graphics2D) g.create();
+//        //Translucent
+//        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+//
+//        //background with translucent color
+//        g2d.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 150));
+//        g2d.fillRect(startX + start * boxWidth, startY, (end - start) * boxWidth, boxHeight);
+//
+//
+//        g2d.setColor(color);
+//        g2d.drawRect(startX + start * boxWidth, startY, (end - start) * boxWidth, boxHeight);
+//
+//
+//        g2d.setColor(Color.BLACK);
+//        FontMetrics fm = g2d.getFontMetrics();
+//        for (int i = start; i < end; i++) {
+//            String character = String.valueOf(string.charAt(i));
+//            int stringWidth = fm.stringWidth(character);
+//            g2d.drawString(character, startX + i * boxWidth + (boxWidth - stringWidth) / 2, startY + boxHeight / 2 + fm.getAscent() / 2);
+//        }
+//
+//        g2d.dispose();
+//    }
+//
+//
+//    private void pause(int milliseconds) {
+//        try {
+//            Thread.sleep(milliseconds);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
+    private void restartSearch() {
         Graphics g = arrayPanel.getGraphics();
         g.clearRect(0, 0, arrayPanel.getWidth(), arrayPanel.getHeight());
+        array = null;
+        string = null;
     }
 
     private void drawArray(Graphics g) {
+        if (array == null) return;
+
         int startX = 10;
         int startY = 30;
         int boxWidth = 40;
         int boxHeight = 40;
-        FontMetrics fm = g.getFontMetrics();
-        g.setColor(textColor);
 
-        if (array != null) {
-            for (int i = 0; i < array.length; i++) {
-                g.drawRect(startX + i * boxWidth, startY, boxWidth, boxHeight);
-                String num = Integer.toString(array[i]);
-                int stringWidth = fm.stringWidth(num);
-                g.drawString(num, startX + i * boxWidth + (boxWidth - stringWidth) / 2, startY + boxHeight / 2 + fm.getAscent() / 2);
-            }
+        for (int i = 0; i < array.length; i++) {
+            g.setColor(Color.WHITE);
+            g.fillRect(startX + i * boxWidth, startY, boxWidth, boxHeight);
+
+            g.setColor(Color.BLACK);
+            g.drawRect(startX + i * boxWidth, startY, boxWidth, boxHeight);
+
+            String num = Integer.toString(array[i]);
+            FontMetrics fm = g.getFontMetrics();
+            int stringWidth = fm.stringWidth(num);
+            g.drawString(num, startX + i * boxWidth + (boxWidth - stringWidth) / 2,
+                    startY + boxHeight / 2 + fm.getAscent() / 2);
         }
     }
 
     private void drawString(Graphics g) {
+        if (string == null) return;
+
         int startX = 10;
         int startY = 100;
-        int boxWidth = 40;
-        int boxHeight = 40;
-        FontMetrics fm = g.getFontMetrics();
-        g.setColor(textColor);
+        int charWidth = 20;
 
-        if (string != null) {
-            for (int i = 0; i < string.length(); i++) {
-                g.drawRect(startX + i * boxWidth, startY, boxWidth, boxHeight);
-                String character = String.valueOf(string.charAt(i));
-                int stringWidth = fm.stringWidth(character);
-                g.drawString(character, startX + i * boxWidth + (boxWidth - stringWidth) / 2, startY + boxHeight / 2 + fm.getAscent() / 2);
-            }
+        for (int i = 0; i < string.length(); i++) {
+            g.setColor(Color.WHITE);
+            g.fillRect(startX + i * charWidth, startY, charWidth, charWidth);
+
+            g.setColor(Color.BLACK);
+            g.drawRect(startX + i * charWidth, startY, charWidth, charWidth);
+
+            String ch = Character.toString(string.charAt(i));
+            FontMetrics fm = g.getFontMetrics();
+            int stringWidth = fm.stringWidth(ch);
+            g.drawString(ch, startX + i * charWidth + (charWidth - stringWidth) / 2,
+                    startY + charWidth / 2 + fm.getAscent() / 2);
         }
     }
 
@@ -337,42 +440,45 @@ public class SearchVisualizer extends JFrame {
         int startY = 30;
         int boxWidth = 40;
         int boxHeight = 40;
+
         g.setColor(color);
         g.fillRect(startX + index * boxWidth, startY, boxWidth, boxHeight);
-        g.setColor(textColor);
+
+        g.setColor(Color.BLACK);
         g.drawRect(startX + index * boxWidth, startY, boxWidth, boxHeight);
+
+        if (array != null && index >= 0 && index < array.length) {
+            String num = Integer.toString(array[index]);
+            FontMetrics fm = g.getFontMetrics();
+            int stringWidth = fm.stringWidth(num);
+            g.setColor(textColor);
+            g.drawString(num, startX + index * boxWidth + (boxWidth - stringWidth) / 2,
+                    startY + boxHeight / 2 + fm.getAscent() / 2);
+        }
     }
 
-    private void highlightString(Graphics g, int start, int end, Color color) {
+    private void highlightString(Graphics g, int startIndex, int endIndex, Color color) {
         int startX = 10;
         int startY = 100;
-        int boxWidth = 40;
-        int boxHeight = 40;
+        int charWidth = 20;
 
-        Graphics2D g2d = (Graphics2D) g.create();
-        //Translucent
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+        for (int i = startIndex; i < endIndex; i++) {
+            g.setColor(color);
+            g.fillRect(startX + i * charWidth, startY, charWidth, charWidth);
 
-        //background with translucent color
-        g2d.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 150));
-        g2d.fillRect(startX + start * boxWidth, startY, (end - start) * boxWidth, boxHeight);
+            g.setColor(Color.BLACK);
+            g.drawRect(startX + i * charWidth, startY, charWidth, charWidth);
 
-
-        g2d.setColor(color);
-        g2d.drawRect(startX + start * boxWidth, startY, (end - start) * boxWidth, boxHeight);
-
-
-        g2d.setColor(Color.BLACK);
-        FontMetrics fm = g2d.getFontMetrics();
-        for (int i = start; i < end; i++) {
-            String character = String.valueOf(string.charAt(i));
-            int stringWidth = fm.stringWidth(character);
-            g2d.drawString(character, startX + i * boxWidth + (boxWidth - stringWidth) / 2, startY + boxHeight / 2 + fm.getAscent() / 2);
+            if (string != null && i < string.length()) {
+                String ch = Character.toString(string.charAt(i));
+                FontMetrics fm = g.getFontMetrics();
+                int stringWidth = fm.stringWidth(ch);
+                g.setColor(textColor);
+                g.drawString(ch, startX + i * charWidth + (charWidth - stringWidth) / 2,
+                        startY + charWidth / 2 + fm.getAscent() / 2);
+            }
         }
-
-        g2d.dispose();
     }
-
 
     private void pause(int milliseconds) {
         try {
